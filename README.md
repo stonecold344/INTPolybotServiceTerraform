@@ -1,9 +1,3 @@
-> [!IMPORTANT]
-> This project is part of the [DevOpsTheHardWay][DevOpsTheHardWay] course. Please [onboard the course][onboarding_tutorial] before starting. 
-> 
-> The project builds upon the work done in our [previous AWS project][PolybotServiceAWS].
-> **You have to complete the AWS project first in order to start this project.** 
-
 # The Polybot Service: Terraform Project
 
 ## Background and goals
@@ -25,8 +19,7 @@ You can work on the same repo used in the previous AWS project.
 
 > [!WARNING]
 > This project involves working with multiple AWS services. 
-> Note that you are responsible for the costs of any resources you create.
-> Proceed with caution and ensure that you understand the implications of provisioning resources using Terraform. 
+> Please proceed with caution and ensure that you understand the implications of provisioning resources using Terraform. 
 > Always double-check your Terraform configurations before applying changes, and use `terraform destroy` when necessary to tear down resources and avoid additional charges.
 
 Let's get started...
@@ -176,9 +169,6 @@ provider "aws" {
 
 # Good Luck
 
-[DevOpsTheHardWay]: https://github.com/alonitac/DevOpsTheHardWay
-[onboarding_tutorial]: https://github.com/alonitac/DevOpsTheHardWay/blob/main/tutorials/onboarding.md
-[github_actions]: ../../actions
 
-[PolybotServiceAWS]: https://github.com/alonitac/PolybotServiceAWS
+[PolybotServiceAWS]: https://github.com/alonitac/INTPolybotServiceAWS
 [tf_project_regions]: https://alonitac.github.io/DevOpsTheHardWay/img/tf_project_regions.png
