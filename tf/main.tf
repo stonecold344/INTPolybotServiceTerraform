@@ -48,16 +48,6 @@ resource "aws_route_table" "polybot_route_table" {
   }
 }
 
-resource "aws_route_table_association" "polybot_route_association" {
-  subnet_id      = aws_subnet.polybot_subnet.id
-  route_table_id = aws_route_table.polybot_route_table.id
-}
-
-resource "aws_route_table_association" "polybot_route_association_2" {
-  subnet_id      = aws_subnet.polybot_subnet_2.id
-  route_table_id = aws_route_table.polybot_route_table.id
-}
-
 resource "aws_subnet" "polybot_subnet" {
   vpc_id            = aws_vpc.polybot_vpc.id
   cidr_block        = "10.0.1.0/24"
@@ -265,23 +255,12 @@ resource "aws_instance" "polybot_instance" {
                 sudo apt install -y unzip curl snapd
 
                 # Install Docker
-                # Add Docker’s official GPG key
                 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-
-                # Add Docker’s APT repository
                 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-
-                # Update the package index again
                 sudo apt update -y
-
-                # Install Docker
                 sudo apt install -y docker-ce
-
-                # Start Docker service
                 sudo systemctl start docker
                 sudo systemctl enable docker
-
-                # Add the ubuntu user to the docker group
                 sudo usermod -aG docker ubuntu
 
                 # Install Docker Compose
@@ -289,7 +268,7 @@ resource "aws_instance" "polybot_instance" {
                 sudo curl -L "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
                 sudo chmod +x /usr/local/bin/docker-compose
 
-                # Install AWS CLI version 2 via snap
+                # Install AWS CLI
                 sudo snap install aws-cli --classic
 
                 # Verify AWS CLI installation
@@ -334,23 +313,12 @@ resource "aws_instance" "yolo5_instance" {
                 sudo apt install -y unzip curl snapd
 
                 # Install Docker
-                # Add Docker’s official GPG key
                 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-
-                # Add Docker’s APT repository
                 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-
-                # Update the package index again
                 sudo apt update -y
-
-                # Install Docker
                 sudo apt install -y docker-ce
-
-                # Start Docker service
                 sudo systemctl start docker
                 sudo systemctl enable docker
-
-                # Add the ubuntu user to the docker group
                 sudo usermod -aG docker ubuntu
 
                 # Install Docker Compose
@@ -358,7 +326,7 @@ resource "aws_instance" "yolo5_instance" {
                 sudo curl -L "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
                 sudo chmod +x /usr/local/bin/docker-compose
 
-                # Install AWS CLI version 2 via snap
+                # Install AWS CLI
                 sudo snap install aws-cli --classic
 
                 # Verify AWS CLI installation
