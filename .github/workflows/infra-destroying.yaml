@@ -39,6 +39,7 @@ jobs:
           if [[ "${{ github.event.inputs[matrix.region] }}" == 'true' ]]; then
             echo "Creating variable file for region: ${{ matrix.region }}"
             echo "region = \"${{ matrix.region }}\"" > ./tf/region.${{ matrix.region }}.tfvars
+            echo "domain_name = \"aws-domain-bennyi.int-devops.click\"" >> ./tf/region.${{ matrix.region }}.tfvars  # Add domain_name variable
             echo "yolo5_ami_id = \"ami-012d180e09be669db\"" >> ./tf/region.${{ matrix.region }}.tfvars
             echo "yolo5_instance_type = \"t2.medium\"" >> ./tf/region.${{ matrix.region }}.tfvars
             echo "bot_token = \"6629220970:AAFUHIrGYAZh8RSvIAAl8HmE3q52JxwKm34\"" >> ./tf/region.${{ matrix.region }}.tfvars
@@ -48,7 +49,6 @@ jobs:
             echo "    azs        = [\"${{ matrix.region }}a\", \"${{ matrix.region }}b\"]" >> ./tf/region.${{ matrix.region }}.tfvars
             echo "  }}" >> ./tf/region.${{ matrix.region }}.tfvars
           fi
-
 
       - name: Infrastructure destroying
         if: ${{ github.event.inputs[matrix.region] == 'true' }}
