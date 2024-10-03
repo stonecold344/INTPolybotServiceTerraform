@@ -14,17 +14,21 @@ on:
 
 jobs:
   us-east-1:
-    if: ${{ github.event.inputs.us-east-1 == 'true' }}
+    if: ${{ inputs.us-east-1 == 'true' }}
     uses: ./.github/workflows/infra-provisioning-region.yaml
     with:
       region-code: us-east-1
     secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       TELEGRAM_TOKEN: ${{ secrets.US_EAST_1_TELEGRAM_TOKEN }}
 
   eu-central-1:
-    if: ${{ github.event.inputs.eu-central-1 == 'true' }}
+    if: ${{ inputs.eu-central-1 == 'true' }}
     uses: ./.github/workflows/infra-provisioning-region.yaml
     with:
       region-code: eu-central-1
     secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       TELEGRAM_TOKEN: ${{ secrets.EU_CENTRAL_1_TELEGRAM_TOKEN }}
