@@ -46,3 +46,8 @@ variable "yolo5_ami_id" {
   description = "The AMI ID for Yolo5 instance"
   type        = string
 }
+
+variable "bot_token" {
+  description = "Telegram bot token"
+  type        = string
+}

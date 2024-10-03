@@ -35,11 +35,6 @@ jobs:
         if: ${{ github.event.inputs[ matrix.region ] == 'true' }}
         working-directory: ./tf
         run: |
-          # init terraform 
           terraform init
-          
-          # select workspace or create if needed
           terraform workspace select ${{ matrix.region }}  || terraform workspace new ${{ matrix.region }}
-
-          # tf destroy 
-          terraform destroy -auto-approve -var-file=${{ matrix.region }}
+          terraform destroy -auto-approve -var-file=region.${{ matrix.region }}.tfvars

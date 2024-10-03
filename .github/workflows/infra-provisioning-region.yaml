@@ -18,7 +18,7 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     defaults:
       run:
-        working-directory: ./tf  # The directory containing your Terraform configuration files
+        working-directory: ./tf
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
