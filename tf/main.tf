@@ -300,13 +300,13 @@ resource "aws_instance" "polybot_instance" {
                 SECRET_VALUE=$(aws secretsmanager get-secret-value --secret-id "$SECRET_NAME" --query 'SecretString' --output text)
 
                 # Login to DockerHub
-                sudo docker login -u "DOCKERHUB_USERNAME" -p "$SECRET_VALUE"
+                sudo docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "$SECRET_VALUE"
 
                 # Pull the latest Polybot image
-                sudo docker pull DOCKERHUB_USERNAME/polybot:latest
+                sudo docker pull "${{ secrets.DOCKER_USERNAME }}/polybot:latest"
 
                 # Run Polybot in Docker
-                sudo docker run -d --name polybot -p 8443:8443 --restart always DOCKERHUB_USERNAME/polybot:latest
+                sudo docker run -d --name polybot -p 8443:8443 --restart always "${{ secrets.DOCKER_USERNAME }}/polybot:latest"
                 EOF
 
   tags = {
@@ -369,13 +369,13 @@ resource "aws_instance" "yolo5_instance" {
                 SECRET_VALUE=$(aws secretsmanager get-secret-value --secret-id "$SECRET_NAME" --query 'SecretString' --output text)
 
                 # Login to DockerHub
-                sudo docker login -u "DOCKERHUB_USERNAME" -p "$SECRET_VALUE"
+                sudo docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "$SECRET_VALUE"
 
                 # Pull the latest Yolo5 image
-                sudo docker pull DOCKERHUB_USERNAME/yolo5:latest
+                sudo docker pull "${{ secrets.DOCKER_USERNAME }}/yolo5:latest"
 
                 # Run Yolo5 in Docker
-                sudo docker run -d --name yolo5 -p 8081:8081 --restart always DOCKERHUB_USERNAME/yolo5:latest
+                sudo docker run -d --name yolo5 -p 8081:8081 --restart always "${{ secrets.DOCKER_USERNAME }}/yolo5:latest"
                 EOF
 
   tags = {
