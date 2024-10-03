@@ -11,3 +11,4 @@ vpc_configs = {
 yolo5_ami_id = "ami-012d180e09be669db"
 yolo5_instance_type = "t2.medium"
 bot_token = "6629220970:AAFUHIrGYAZh8RSvIAAl8HmE3q52JxwKm34"
+domain_name = "aws-domain-bennyi.int-devops.click"
