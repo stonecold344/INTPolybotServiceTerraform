@@ -36,16 +36,13 @@ jobs:
 
       - name: Create variables file
         run: |
-          if [[ "${{ github.event.inputs[ matrix.region ] }}" == 'true' ]]; then
+          if [[ "${{ github.event.inputs[matrix.region] }}" == 'true' ]]; then
             echo "region = \"${{ matrix.region }}\"" > ./tf/${{ matrix.region }}.tfvars
             echo "yolo5_ami_id = \"ami-012d180e09be669db\"" >> ./tf/${{ matrix.region }}.tfvars
             echo "yolo5_instance_type = \"t2.medium\"" >> ./tf/${{ matrix.region }}.tfvars
             echo "bot_token = \"6629220970:AAFUHIrGYAZh8RSvIAAl8HmE3q52JxwKm34\"" >> ./tf/${{ matrix.region }}.tfvars
             echo "vpc_configs = {\"${{ matrix.region }}\" = { cidr_block = \"10.0.0.0/16\" }}" >> ./tf/${{ matrix.region }}.tfvars
-            echo "}" >> ./tf/${{ matrix.region }}.tfvars
-            echo "yolo5_ami_id = \"ami-012d180e09be669db\"" >> ./tf/${{ matrix.region }}.tfvars
-            echo "yolo5_instance_type = \"t2.medium\"" >> ./tf/${{ matrix.region }}.tfvars
-            echo "bot_token = \"6629220970:AAFUHIrGYAZh8RSvIAAl8HmE3q52JxwKm34\"" >> ./tf/${{ matrix.region }}.tfvars
+            echo "}" >> ./tf/${{ matrix.region }}.tfvars  # Closing the vpc_configs block
           fi
 
       - name: Infrastructure destroying
