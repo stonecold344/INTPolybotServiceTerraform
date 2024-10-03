@@ -38,15 +38,15 @@ jobs:
         run: |
           if [[ "${{ github.event.inputs[matrix.region] }}" == 'true' ]]; then
             echo "Creating variable file for region: ${{ matrix.region }}"
-            echo "region = \"${{ matrix.region }}\"" > ./tf/${{ matrix.region }}.tfvars
-            echo "yolo5_ami_id = \"ami-012d180e09be669db\"" >> ./tf/${{ matrix.region }}.tfvars
-            echo "yolo5_instance_type = \"t2.medium\"" >> ./tf/${{ matrix.region }}.tfvars
-            echo "bot_token = \"6629220970:AAFUHIrGYAZh8RSvIAAl8HmE3q52JxwKm34\"" >> ./tf/${{ matrix.region }}.tfvars
-            echo "vpc_configs = {\"${{ matrix.region }}\" = {" >> ./tf/${{ matrix.region }}.tfvars
-            echo "    cidr_block = \"10.0.0.0/16\"" >> ./tf/${{ matrix.region }}.tfvars
-            echo "    name       = \"terraform-vpc-${{ matrix.region }}-bennyi\"" >> ./tf/${{ matrix.region }}.tfvars
-            echo "    azs        = [\"${{ matrix.region }}a\", \"${{ matrix.region }}b\"]" >> ./tf/${{ matrix.region }}.tfvars
-            echo "  }}" >> ./tf/${{ matrix.region }}.tfvars
+            echo "region = \"${{ matrix.region }}\"" > ./tf/region.${{ matrix.region }}.tfvars
+            echo "yolo5_ami_id = \"ami-012d180e09be669db\"" >> ./tf/region.${{ matrix.region }}.tfvars
+            echo "yolo5_instance_type = \"t2.medium\"" >> ./tf/region.${{ matrix.region }}.tfvars
+            echo "bot_token = \"6629220970:AAFUHIrGYAZh8RSvIAAl8HmE3q52JxwKm34\"" >> ./tf/region.${{ matrix.region }}.tfvars
+            echo "vpc_configs = {\"${{ matrix.region }}\" = {" >> ./tf/region.${{ matrix.region }}.tfvars
+            echo "    cidr_block = \"10.0.0.0/16\"" >> ./tf/region.${{ matrix.region }}.tfvars
+            echo "    name       = \"terraform-vpc-${{ matrix.region }}-bennyi\"" >> ./tf/region.${{ matrix.region }}.tfvars
+            echo "    azs        = [\"${{ matrix.region }}a\", \"${{ matrix.region }}b\"]" >> ./tf/region.${{ matrix.region }}.tfvars
+            echo "  }}" >> ./tf/region.${{ matrix.region }}.tfvars
           fi
 
 
@@ -61,4 +61,4 @@ jobs:
           terraform workspace select ${{ matrix.region }} || terraform workspace new ${{ matrix.region }}
 
           echo "Destroying infrastructure in region: ${{ matrix.region }}"
-          terraform destroy -auto-approve -var-file=${{ matrix.region }}.tfvars || { echo 'Terraform destroy failed!'; exit 1; }
+          terraform destroy -auto-approve -var-file=region.${{ matrix.region }}.tfvars || { echo 'Terraform destroy failed!'; exit 1; }
