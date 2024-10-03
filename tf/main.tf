@@ -369,13 +369,13 @@ resource "aws_instance" "yolo5_instance" {
                 SECRET_VALUE=$(aws secretsmanager get-secret-value --secret-id "$SECRET_NAME" --query 'SecretString' --output text)
 
                 # Login to DockerHub
-                sudo docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "$SECRET_VALUE"
+                sudo docker login -u "DOCKER_USERNAME" -p "$SECRET_VALUE"
 
                 # Pull the latest Yolo5 image
-                sudo docker pull "${{ secrets.DOCKER_USERNAME }}/yolo5:latest"
+                sudo docker pull "DOCKER_USERNAME/yolo5:latest"
 
                 # Run Yolo5 in Docker
-                sudo docker run -d --name yolo5 -p 8081:8081 --restart always "${{ secrets.DOCKER_USERNAME }}/yolo5:latest"
+                sudo docker run -d --name yolo5 -p 8081:8081 --restart always "DOCKER_USERNAME/yolo5:latest"
                 EOF
 
   tags = {
