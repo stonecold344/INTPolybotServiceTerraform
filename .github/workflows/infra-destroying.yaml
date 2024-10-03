@@ -42,13 +42,17 @@ jobs:
             echo "yolo5_ami_id = \"ami-012d180e09be669db\"" >> ./tf/${{ matrix.region }}.tfvars
             echo "yolo5_instance_type = \"t2.medium\"" >> ./tf/${{ matrix.region }}.tfvars
             echo "bot_token = \"6629220970:AAFUHIrGYAZh8RSvIAAl8HmE3q52JxwKm34\"" >> ./tf/${{ matrix.region }}.tfvars
-            echo "vpc_configs = {\"${{ matrix.region }}\" = {" >> ./tf/${{ matrix.region }}.tfvars
+            echo "vpc_configs = {" >> ./tf/${{ matrix.region }}.tfvars
+            echo "  \"${{ matrix.region }}\" = {" >> ./tf/${{ matrix.region }}.tfvars
             echo "    cidr_block = \"10.0.0.0/16\"" >> ./tf/${{ matrix.region }}.tfvars
             echo "    name       = \"terraform-vpc-${{ matrix.region }}-bennyi\"" >> ./tf/${{ matrix.region }}.tfvars
             echo "    azs        = [\"${{ matrix.region }}a\", \"${{ matrix.region }}b\"]" >> ./tf/${{ matrix.region }}.tfvars
-            echo "  }}" >> ./tf/${{ matrix.region }}.tfvars
+            echo "  }" >> ./tf/${{ matrix.region }}.tfvars
+            echo "}" >> ./tf/${{ matrix.region }}.tfvars
           fi
 
+      - name: Display TFVars content (debugging)
+        run: cat ./tf/${{ matrix.region }}.tfvars
 
       - name: Infrastructure destroying
         if: ${{ github.event.inputs[matrix.region] == 'true' }}
