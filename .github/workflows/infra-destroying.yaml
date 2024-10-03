@@ -1,4 +1,4 @@
-name: Polybot Infrastructure Destroy Terraform
+name: Infrastructure Destroy Terraform
 
 on:
   workflow_dispatch:
