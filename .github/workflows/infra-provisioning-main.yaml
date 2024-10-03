@@ -15,7 +15,7 @@ on:
 jobs:
   us-east-1:
     if: ${{ github.event.inputs.us-east-1 == 'true' }}
-    uses: ./.github/workflows/infra-provisioning-region.yml
+    uses: ./.github/workflows/infra-provisioning-region.yaml
     with:
       region-code: us-east-1
     secrets:
@@ -23,7 +23,7 @@ jobs:
 
   eu-central-1:
     if: ${{ github.event.inputs.eu-central-1 == 'true' }}
-    uses: ./.github/workflows/infra-provisioning-region.yml
+    uses: ./.github/workflows/infra-provisioning-region.yaml
     with:
       region-code: eu-central-1
     secrets:
