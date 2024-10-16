@@ -18,9 +18,14 @@ output "sqs_queue_url" {
   value = aws_sqs_queue.polybot_queue.id
 }
 
-output "dynamodb_table_name" {
-  value = aws_dynamodb_table.polybot_table.name
+output "dynamodb_predictions_table_name" {
+  value = aws_dynamodb_table.predictions_table.name
 }
+
+output "dynamodb_chat_prediction_state_table_name" {
+  value = aws_dynamodb_table.chat_prediction_state_table.name
+}
+
 
 output "polybot_instance_public_ip" {
   value = aws_instance.polybot_instance.public_ip
@@ -32,4 +37,8 @@ output "yolo5_instance_public_ip" {
 
 output "alb_dns_name" {
   value = aws_alb.polybot_alb.dns_name
+}
+
+output "s3_bucket_name" {
+  value = local.bucket_name
 }

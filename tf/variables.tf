@@ -1,3 +1,9 @@
+variable "base_bucket_name" {
+  description = "Base name for S3 bucket"
+  type        = string
+  default     = "bennyi-aws-s3-bucket"  # Default value to avoid prompts
+}
+
 variable "domain_name" {
   description = "The domain name for the application"
   type        = string
@@ -42,12 +48,28 @@ variable "role_name" {
   type        = string
 }
 
+variable "polybot_ami_id" {
+  description = "The AMI ID for Yolo5 instance"
+  type        = string
+}
+
 variable "yolo5_ami_id" {
   description = "The AMI ID for Yolo5 instance"
   type        = string
 }
 
-variable "bot_token" {
-  description = "Telegram bot token"
+variable "telegram_bot_token" {
   type        = string
+  description = "Telegram bot token for Polybot"
+}
+
+variable "secret_id" {
+  type        = string
+  description = "Telegram bot token for Polybot"
+}
+
+variable "route53_zone_id" {
+  description = "Route53 Zone ID for DNS records"
+  type        = string
+  default = "Z01194351X4YEXPPLZ8MN"
 }
