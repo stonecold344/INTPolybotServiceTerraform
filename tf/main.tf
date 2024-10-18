@@ -513,7 +513,6 @@ resource "aws_instance" "polybot_instance" {
   }
 }
 
-### Yolo5 Instance ###
 resource "aws_instance" "yolo5_instance" {
   ami                  = var.yolo5_ami_id
   instance_type        = var.yolo5_instance_type
@@ -521,6 +520,11 @@ resource "aws_instance" "yolo5_instance" {
   security_groups      = [aws_security_group.polybot_sg.id]
   iam_instance_profile = aws_iam_instance_profile.common_instance_profile.name
   associate_public_ip_address = true
+
+  root_block_device {
+    volume_size = 30
+    volume_type = "gp2"
+  }
 
   user_data = <<-EOF
                 #!/bin/bash
@@ -549,24 +553,23 @@ resource "aws_instance" "yolo5_instance" {
                 # Install AWS CLI
                 sudo snap install aws-cli --classic
 
+                # Clean up Docker to free space
+                docker system prune -a -f
+
                 # Retrieve Docker password from AWS Secrets Manager
                 SECRET_NAME='DOCKERHUB_PASSWORD'
                 SECRET_VALUE=\$(aws secretsmanager get-secret-value --secret-id "\$SECRET_NAME" --query 'SecretString' --output text)
 
                 # Login to DockerHub
                 sudo docker login -u "stonecold344" -p "\$SECRET_VALUE"
-
-                # Pull the latest Polybot image
-                sudo docker pull "stonecold344/yolo5:latest"
+                cd yolo5/yolo5
                 EOF
-
-
 
   provisioner "remote-exec" {
     inline = [
       "mkdir -p /home/ubuntu/yolo5 || true",
       "sudo chown ubuntu:ubuntu /home/ubuntu/yolo5",
-      "chmod 755 /home/ubuntu/yolo5 || true"   # Ignore errors if permissions fail
+      "chmod 755 /home/ubuntu/yolo5 || true"
     ]
     connection {
       type        = "ssh"
@@ -601,6 +604,8 @@ resource "aws_instance" "yolo5_instance" {
       "sed -i '/SQS_QUEUE_NAME/c\\SQS_QUEUE_NAME=aws-sqs-image-processing-bennyi' /home/ubuntu/yolo5/yolo5/.env",
       "sed -i '/SCERET_ID/c\\SECRET_ID='${var.secret_id }'' /home/ubuntu/yolo5/yolo5/.env",
       "cd /home/ubuntu/yolo5/yolo5",
+      "sudo systemctl restart docker",
+      "docker system prune -a -f",  # Prune earlier
       "docker build -t stonecold344/yolo5 .",
       "docker-compose up -d"
     ]
@@ -616,6 +621,7 @@ resource "aws_instance" "yolo5_instance" {
     Name = "yolo5-instance-bennyi"
   }
 }
+
 
 resource "aws_lb_target_group_attachment" "attachment1" {
   target_group_arn = aws_alb_target_group.polybot_target_group.id
