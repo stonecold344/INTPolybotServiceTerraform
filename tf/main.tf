@@ -463,7 +463,7 @@ resource "aws_instance" "polybot_instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = local.formatted_private_key
+      private_key = file("~/.ssh/id_rsa")
       host        = self.public_ip
     }
   }
@@ -475,7 +475,7 @@ resource "aws_instance" "polybot_instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = local.formatted_private_key
+      private_key = file("~/.ssh/id_rsa")
       host        = self.public_ip
     }
   }
@@ -494,7 +494,7 @@ resource "aws_instance" "polybot_instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = local.formatted_private_key
+      private_key = file("~/.ssh/id_rsa")
       host        = self.public_ip
     }
   }
@@ -508,7 +508,7 @@ resource "aws_instance" "polybot_instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = local.formatted_private_key
+      private_key = file("~/.ssh/id_rsa")
       host        = self.public_ip
     }
   }
@@ -578,7 +578,7 @@ resource "aws_instance" "yolo5_instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = local.formatted_private_key
+      private_key = file("~/.ssh/id_rsa")
       host        = self.public_ip
     }
   }
@@ -590,7 +590,7 @@ resource "aws_instance" "yolo5_instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = local.formatted_private_key
+      private_key = file("~/.ssh/id_rsa")
       host        = self.public_ip
     }
   }
@@ -616,7 +616,7 @@ resource "aws_instance" "yolo5_instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = local.formatted_private_key
+      private_key = file("~/.ssh/id_rsa")
       host        = self.public_ip
     }
   }

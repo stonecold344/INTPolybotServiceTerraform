@@ -48,7 +48,7 @@ jobs:
       - name: Pass SSH Key to Terraform
         working-directory: ./tf
         run: |
-          echo "${{ secrets.AWS_PRIVATE_KEY }}" > aws-bennyi.pem
+          echo "${{ secrets.AWS_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 aws-bennyi.pem  # Set permissions for the private key file      
 
       - name: Terraform validate
