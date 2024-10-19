@@ -73,3 +73,9 @@ variable "route53_zone_id" {
   type        = string
   default = "Z01194351X4YEXPPLZ8MN"
 }
+
+variable "aws_private_key" {
+  description = "Private key content for SSH access"
+  type        = string
+  sensitive   = true
+}

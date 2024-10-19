@@ -392,7 +392,7 @@ resource "aws_iam_role_policy_attachment" "common_ec2_policy" {
 
 
 resource "aws_secretsmanager_secret" "telegram_bot_token" {
-  name        = "Telegram-Secret-Bennyi23"
+  name        = "Telegram-Secret-Bennyi24"
   description = "Telegram Bot token for Polybot"
 
   tags = {
@@ -459,7 +459,7 @@ resource "aws_instance" "polybot_instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = file("~/Downloads/aws-bennyi.pem")
+      private_key = var.aws_private_key
       host        = self.public_ip
     }
   }
@@ -471,7 +471,7 @@ resource "aws_instance" "polybot_instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = file("~/Downloads/aws-bennyi.pem")
+      private_key = var.aws_private_key
       host        = self.public_ip
     }
   }
@@ -490,7 +490,7 @@ resource "aws_instance" "polybot_instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = file("~/Downloads/aws-bennyi.pem")
+      private_key = var.aws_private_key
       host        = self.public_ip
     }
   }
@@ -504,7 +504,7 @@ resource "aws_instance" "polybot_instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = file("~/Downloads/aws-bennyi.pem")
+      private_key = var.aws_private_key
       host        = self.public_ip
     }
   }
@@ -574,7 +574,7 @@ resource "aws_instance" "yolo5_instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = file("~/Downloads/aws-bennyi.pem")
+      private_key = var.aws_private_key
       host        = self.public_ip
     }
   }
@@ -586,7 +586,7 @@ resource "aws_instance" "yolo5_instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = file("~/Downloads/aws-bennyi.pem")
+      private_key = var.aws_private_key
       host        = self.public_ip
     }
   }
@@ -612,7 +612,7 @@ resource "aws_instance" "yolo5_instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = file("~/Downloads/aws-bennyi.pem")
+      private_key = var.aws_private_key
       host        = self.public_ip
     }
   }
