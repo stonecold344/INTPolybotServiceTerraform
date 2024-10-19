@@ -72,3 +72,8 @@ variable "aws_private_key" {
   description = "The private key for SSH access"
   type        = string
 }
+
+variable "certificate_arn" {
+  description = "The private key for SSH access"
+  type        = string
+}
