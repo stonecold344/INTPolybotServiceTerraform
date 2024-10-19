@@ -11,6 +11,8 @@ on:
         required: true
       AWS_SECRET_ACCESS_KEY:
         required: true
+      AWS_PRIVATE_KEY:
+        required: true
 
 jobs:
   Terraform:
@@ -18,6 +20,8 @@ jobs:
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -55,7 +59,6 @@ jobs:
         working-directory: ./tf
         run: |
           echo "Running Terraform plan for region ${REGION_CODE}"
-          export TF_VAR_botToken=${{ secrets.TELEGRAM_TOKEN }}
           terraform plan -var-file=region.${{ inputs.region-code }}.tfvars
 
       - name: Terraform apply
