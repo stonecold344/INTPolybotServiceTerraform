@@ -52,6 +52,8 @@ jobs:
           echo "${{ secrets.AWS_PRIVATE_KEY }}" > aws-bennyi.pem
           chmod 600 aws-bennyi.pem  # Set permissions for the private key file      
           ls -al
+          cd ../
+          ls -al
 
       - name: Terraform validate
         working-directory: ./tf
