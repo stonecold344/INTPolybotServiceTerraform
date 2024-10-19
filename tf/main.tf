@@ -498,6 +498,7 @@ resource "aws_instance" "polybot_instance" {
       "sed -i.bak '/AWS_REGION/c\\AWS_REGION='${var.region}'' /home/ubuntu/projects/AWSProject-bennyi/polybot/.env",
       "sed -i.bak '/SQS_URL/c\\SQS_URL=https://sqs.${var.region}.amazonaws.com/019273956931/aws-sqs-image-processing-bennyi' /home/ubuntu/projects/AWSProject-bennyi/polybot/.env",
       "sed -i.bak '/SECRET_ID/c\\SECRET_ID='${var.secret_id }'' /home/ubuntu/projects/AWSProject-bennyi/polybot/.env",
+      "cat .env"
     ]
     connection {
       type        = "ssh"
@@ -619,6 +620,7 @@ resource "aws_instance" "yolo5_instance" {
       "sed -i.bak '/SQS_URL/c\\SQS_URL=https://sqs.${var.region}.amazonaws.com/019273956931/aws-sqs-image-processing-bennyi' /home/ubuntu/yolo5/yolo5/.env",
       "sed -i.bak '/SQS_QUEUE_NAME/c\\SQS_QUEUE_NAME=aws-sqs-image-processing-bennyi' /home/ubuntu/yolo5/yolo5/.env",
       "sed -i.bak '/SCERET_ID/c\\SECRET_ID='${var.secret_id }'' /home/ubuntu/yolo5/yolo5/.env",
+      "cat .env",
       "cd /home/ubuntu/yolo5/yolo5",
       "sudo systemctl restart docker",
       "docker system prune -a -f",  # Prune earlier
