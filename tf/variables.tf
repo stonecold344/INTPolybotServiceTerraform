@@ -68,12 +68,6 @@ variable "secret_id" {
   description = "Telegram bot token for Polybot"
 }
 
-variable "route53_zone_id" {
-  description = "Route53 Zone ID for DNS records"
-  type        = string
-  default = "Z01194351X4YEXPPLZ8MN"
-}
-
 variable "aws_private_key" {
   description = "Private key content for SSH access"
   type        = string

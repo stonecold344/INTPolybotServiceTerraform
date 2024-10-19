@@ -34,7 +34,7 @@ jobs:
           echo "Setting up AWS credentials"
           export AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
           export AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
+          export AWS_PRIVATE_KEY = ${{ secrets.AWS_PRIVATE_KEY }}
       - name: Terraform init
         working-directory: ./tf
         run: terraform init
@@ -61,4 +61,4 @@ jobs:
           echo "Applying Terraform changes"
           export TF_VAR_botToken=${{ secrets.TELEGRAM_TOKEN }}
           export TF_VAR_aws_private_key="${{ secrets.AWS_PRIVATE_KEY }}
-          terraform apply -auto-approve -var-file=region.${{ inputs.region-code }}.tfvars
+          terraform apply -auto-approve -var "aws_private_key=${{ secrets.AWS_PRIVATE_KEY }}" -var-file=region.${{ inputs.region-code }}.tfvars

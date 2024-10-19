@@ -13,4 +13,4 @@ yolo5_instance_type = "t2.medium"
 telegram_bot_token = "7130082480:AAG9tBYC-eSDQKzxznvIxgseCRoARBUZjvw"
 domain_name = "aws-domain-bennyi.int-devops.click"
 aws_private_key = var.aws_private_key
-secret_id = var.secret_id
+secret_id = "Telegram-Secret-Bennyi24"
