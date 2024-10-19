@@ -24,6 +24,10 @@ locals {
   bucket_name = "${var.base_bucket_name}-${var.region}"
 }
 
+locals {
+  formatted_private_key = replace(var.aws_private_key, "\n", "\n")
+}
+
 resource "random_string" "bucket_suffix" {
   length  = 6
   special = false
@@ -459,7 +463,7 @@ resource "aws_instance" "polybot_instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = var.aws_private_key
+      private_key = local.formatted_private_key
       host        = self.public_ip
     }
   }
@@ -471,7 +475,7 @@ resource "aws_instance" "polybot_instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = var.aws_private_key
+      private_key = local.formatted_private_key
       host        = self.public_ip
     }
   }
@@ -490,7 +494,7 @@ resource "aws_instance" "polybot_instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = var.aws_private_key
+      private_key = local.formatted_private_key
       host        = self.public_ip
     }
   }
@@ -504,7 +508,7 @@ resource "aws_instance" "polybot_instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = var.aws_private_key
+      private_key = local.formatted_private_key
       host        = self.public_ip
     }
   }
@@ -574,7 +578,7 @@ resource "aws_instance" "yolo5_instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = var.aws_private_key
+      private_key = local.formatted_private_key
       host        = self.public_ip
     }
   }
@@ -586,7 +590,7 @@ resource "aws_instance" "yolo5_instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = var.aws_private_key
+      private_key = local.formatted_private_key
       host        = self.public_ip
     }
   }
@@ -612,7 +616,7 @@ resource "aws_instance" "yolo5_instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = var.aws_private_key
+      private_key = local.formatted_private_key
       host        = self.public_ip
     }
   }
