@@ -571,9 +571,10 @@ resource "aws_instance" "yolo5_instance" {
 
   provisioner "remote-exec" {
     inline = [
-      "mkdir -p /home/ubuntu/yolo5 || true",
-      "sudo chown ubuntu:ubuntu /home/ubuntu/yolo5",
-      "chmod 755 /home/ubuntu/yolo5 || true"
+      "sudo mkdir -p /home/ubuntu/yolo5",
+      "sudo chown -R ubuntu:ubuntu /home/ubuntu/yolo5",  # Make sure ubuntu is the owner
+      "sudo chmod -R 755 /home/ubuntu/yolo5",  # Full read/write/execute permissions for the user
+      "ls -ld /home/ubuntu/yolo5"  # Debug output to check permissions
     ]
     connection {
       type        = "ssh"
@@ -593,7 +594,9 @@ resource "aws_instance" "yolo5_instance" {
       private_key = file("aws-bennyi.pem")
       host        = self.public_ip
     }
+    on_failure = continue  # Prevent this from stopping all the steps if it fails again
   }
+
 
   provisioner "remote-exec" {
     inline = [
