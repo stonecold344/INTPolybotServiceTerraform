@@ -13,6 +13,8 @@ on:
         required: true
       AWS_SECRET_ACCESS_KEY:
         required: true
+      AWS_PRIVATE_KEY:  # Add this line to declare the AWS_PRIVATE_KEY secret
+        required: true
 
 jobs:
   Terraform:
