@@ -463,8 +463,7 @@ resource "aws_instance" "polybot_instance" {
       "sudo chown -R ubuntu:ubuntu /home/ubuntu/projects/AWSProject-bennyi/polybot",
       "chmod 755 /home/ubuntu/projects/AWSProject-bennyi/polybot || true",
       "cd /home/ubuntu/projects/AWSProject-bennyi/polybot",
-      "ls -al",
-      "cat /home/ubuntu/projects/AWSProject-bennyi/polybot/.env"
+      "ls -al"
      ]
     connection {
       type        = "ssh"
