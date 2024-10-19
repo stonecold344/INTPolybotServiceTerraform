@@ -33,10 +33,8 @@ jobs:
 
       - name: Set up AWS credentials
         run: |
-          echo "Setting up AWS credentials"
-          export AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
-          export AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          export AWS_PRIVATE_KEY=${{ secrets.AWS_PRIVATE_KEY }}
+          echo "AWS credentials are set through the job's env context."
+
       - name: Terraform init
         working-directory: ./tf
         run: terraform init
@@ -53,7 +51,7 @@ jobs:
       - name: Terraform plan
         working-directory: ./tf
         run: |
-          echo "Running Terraform plan for region ${REGION_CODE}"
+          echo "Running Terraform plan for region ${{ inputs.region-code }}"
           export TF_VAR_botToken=${{ secrets.TELEGRAM_TOKEN }}
           terraform plan -var-file=region.${{ inputs.region-code }}.tfvars
 
