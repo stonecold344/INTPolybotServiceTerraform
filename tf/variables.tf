@@ -69,7 +69,6 @@ variable "secret_id" {
 }
 
 variable "aws_private_key" {
-  description = "Private key content for SSH access"
+  description = "The private key for SSH access"
   type        = string
-  sensitive   = true
 }
