@@ -458,9 +458,6 @@ resource "aws_instance" "polybot_instance" {
   # Upload each required file individually
   provisioner "remote-exec" {
     inline = [
-      "mkdir -p /home/ubuntu/projects/AWSProject-bennyi/polybot"
-    ]
-    inline = [
       "set -x",  # Enables detailed logging of each command
       "mkdir -p /home/ubuntu/projects/AWSProject-bennyi/polybot || true",
       "sudo chown -R ubuntu:ubuntu /home/ubuntu/projects/AWSProject-bennyi/polybot",
