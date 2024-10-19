@@ -55,7 +55,7 @@ resource "aws_internet_gateway" "polybot_igw" {
   vpc_id = aws_vpc.polybot_vpc.id
 
   tags = {
-    Name = "polybot-i.bakgw-bennyi"
+    Name = "polybot-igw-bennyi"
   }
 }
 
@@ -339,7 +339,7 @@ resource "aws_lb_listener" "http_8081_listener" {
 }
 
 resource "aws_sqs_queue" "polybot_queue" {
-  name = "aws-sqs-i.bakmage-processing-bennyi"
+  name = "aws-sqs-image-processing-bennyi"
 
   tags = {
     Name = "polybot-queue"
@@ -446,7 +446,7 @@ resource "aws_instance" "polybot_instance" {
 
                 # Retrieve Docker password from AWS Secrets Manager
                 SECRET_NAME='DOCKERHUB_PASSWORD'
-                SECRET_VALUE=\$(aws secretsmanager get-secret-value --secret-i.bakd "\$SECRET_NAME" --query 'SecretString' --output text)
+                SECRET_VALUE=\$(aws secretsmanager get-secret-value --secret-id "\$SECRET_NAME" --query 'SecretString' --output text)
 
                 # Login to DockerHub
                 sudo docker login -u "stonecold344" -p "\$SECRET_VALUE"
@@ -494,7 +494,7 @@ resource "aws_instance" "polybot_instance" {
       "sed -i.bak '/POLYBOT_IMG_NAME/c\\POLYBOT_IMG_NAME='stonecold344/polybot:latest'' /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/.env",
       "sed -i.bak '/DYNAMODB_TABLE/c\\DYNAMODB_TABLE='AWS-Project-Predictions-bennyi'' /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/.env",
       "sed -i.bak '/AWS_REGION/c\\AWS_REGION='${var.region}'' /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/.env",
-      "sed -i.bak '/SQS_URL/c\\SQS_URL=https://sqs.${var.region}.amazonaws.com/019273956931/aws-sqs-i.bakmage-processing-bennyi' /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/.env",
+      "sed -i.bak '/SQS_URL/c\\SQS_URL=https://sqs.${var.region}.amazonaws.com/019273956931/aws-sqs-image-processing-bennyi' /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/.env",
       "sed -i.bak '/SECRET_ID/c\\SECRET_ID='${var.secret_id }'' /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/.env",
     ]
     connection {
@@ -519,7 +519,7 @@ resource "aws_instance" "polybot_instance" {
     }
   }
   tags = {
-    Name = "polybot-i.baknstance-bennyi"
+    Name = "polybot-instance-bennyi"
   }
 }
 
@@ -568,7 +568,7 @@ resource "aws_instance" "yolo5_instance" {
 
                 # Retrieve Docker password from AWS Secrets Manager
                 SECRET_NAME='DOCKERHUB_PASSWORD'
-                SECRET_VALUE=\$(aws secretsmanager get-secret-value --secret-i.bakd "\$SECRET_NAME" --query 'SecretString' --output text)
+                SECRET_VALUE=\$(aws secretsmanager get-secret-value --secret-id "\$SECRET_NAME" --query 'SecretString' --output text)
 
                 # Login to DockerHub
                 sudo docker login -u "stonecold344" -p "\$SECRET_VALUE"
@@ -614,8 +614,8 @@ resource "aws_instance" "yolo5_instance" {
       "sed -i.bak '/YOLO5_IMG_NAME/c\\YOLO5_IMG_NAME='stonecold344/yolo5:latest'' /home/ubuntu/yolo5/yolo5/.env",
       "sed -i.bak '/DYNAMODB_TABLE/c\\DYNAMODB_TABLE='AWS-Project-Predictions-bennyi'' //home/ubuntu/yolo5/yolo5/.env",
       "sed -i.bak '/AWS_REGION/c\\AWS_REGION='${var.region}'' /home/ubuntu/yolo5/yolo5/.env",
-      "sed -i.bak '/SQS_URL/c\\SQS_URL=https://sqs.${var.region}.amazonaws.com/019273956931/aws-sqs-i.bakmage-processing-bennyi' /home/ubuntu/yolo5/yolo5/.env",
-      "sed -i.bak '/SQS_QUEUE_NAME/c\\SQS_QUEUE_NAME=aws-sqs-i.bakmage-processing-bennyi' /home/ubuntu/yolo5/yolo5/.env",
+      "sed -i.bak '/SQS_URL/c\\SQS_URL=https://sqs.${var.region}.amazonaws.com/019273956931/aws-sqs-image-processing-bennyi' /home/ubuntu/yolo5/yolo5/.env",
+      "sed -i.bak '/SQS_QUEUE_NAME/c\\SQS_QUEUE_NAME=aws-sqs-image-processing-bennyi' /home/ubuntu/yolo5/yolo5/.env",
       "sed -i.bak '/SCERET_ID/c\\SECRET_ID='${var.secret_id }'' /home/ubuntu/yolo5/yolo5/.env",
       "cd /home/ubuntu/yolo5/yolo5",
       "sudo systemctl restart docker",
@@ -632,7 +632,7 @@ resource "aws_instance" "yolo5_instance" {
   }
 
   tags = {
-    Name = "yolo5-i.baknstance-bennyi"
+    Name = "yolo5-instance-bennyi"
   }
 }
 
