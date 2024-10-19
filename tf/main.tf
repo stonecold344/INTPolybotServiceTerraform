@@ -487,6 +487,7 @@ resource "aws_instance" "polybot_instance" {
 
   provisioner "remote-exec" {
     inline = [
+      "touch /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/.env || true",  # Create .env if not exists
       "sed -i '/TELEGRAM_TOKEN/c\\TELEGRAM_TOKEN='${var.telegram_bot_token}'' /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/.env",
       "sed -i '/S3_BUCKET_NAME/c\\S3_BUCKET_NAME='${local.bucket_name}'' /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/.env",
       "sed -i '/TELEGRAM_APP_URL/c\\TELEGRAM_APP_URL='https://${var.domain_name}:8443'' /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/.env",
@@ -605,6 +606,7 @@ resource "aws_instance" "yolo5_instance" {
 
   provisioner "remote-exec" {
     inline = [
+      "touch /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/.env || true",  # Create .env if not exists
       "sed -i '/TELEGRAM_TOKEN/c\\TELEGRAM_TOKEN='${var.telegram_bot_token}'' /home/ubuntu/yolo5/yolo5/.env",
       "sed -i '/S3_BUCKET_NAME/c\\S3_BUCKET_NAME='${local.bucket_name}'' /home/ubuntu/yolo5/yolo5/.env",
       "sed -i '/TELEGRAM_APP_URL/c\\TELEGRAM_APP_URL='https://${var.domain_name}:8443'' /home/ubuntu/yolo5/yolo5/.env",
