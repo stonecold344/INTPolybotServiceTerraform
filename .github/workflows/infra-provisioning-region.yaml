@@ -13,7 +13,7 @@ on:
         required: true
       AWS_SECRET_ACCESS_KEY:
         required: true
-      AWS_PRIVATE_KEY:  # Add this line to declare the AWS_PRIVATE_KEY secret
+      AWS_PRIVATE_KEY:  # Ensure this line is included to declare the AWS_PRIVATE_KEY secret
         required: true
 
 jobs:
@@ -22,7 +22,6 @@ jobs:
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY }}
 
     steps:
       - name: Checkout code
@@ -55,12 +54,17 @@ jobs:
         run: |
           echo "Running Terraform plan for region ${{ inputs.region-code }}"
           export TF_VAR_botToken=${{ secrets.TELEGRAM_TOKEN }}
-          terraform plan -var-file=region.${{ inputs.region-code }}.tfvars
+          terraform plan -var "aws_private_key=${{ secrets.AWS_PRIVATE_KEY }}" -var-file=region.${{ inputs.region-code }}.tfvars
+
+      - name: Pass SSH Key to Terraform
+        working-directory: ./tf
+        run: |
+          echo "${{ secrets.AWS_PRIVATE_KEY }}" > aws-bennyi.pem
+          chmod 600 aws-bennyi.pem  # Set permissions for the private key file
 
       - name: Terraform apply
         working-directory: ./tf
         run: |
           echo "Applying Terraform changes"
           export TF_VAR_botToken=${{ secrets.TELEGRAM_TOKEN }}
-          export TF_VAR_aws_private_key="${{ secrets.AWS_PRIVATE_KEY }}"
-          terraform apply -auto-approve -var "aws_private_key=${{ secrets.AWS_PRIVATE_KEY }}" -var-file=region.${{ inputs.region-code }}.tfvars
+          terraform apply -auto-approve -var "aws_private_key=$(cat private_key.pem)" -var-file=region.${{ inputs.region-code }}.tfvars
