@@ -461,7 +461,9 @@ resource "aws_instance" "polybot_instance" {
       "set -x",  # Enables detailed logging of each command
       "mkdir -p /home/ubuntu/projects/AWSProject-bennyi/polybot || true",
       "sudo chown -R ubuntu:ubuntu /home/ubuntu/projects/AWSProject-bennyi/polybot",
-      "chmod 755 /home/ubuntu/projects/AWSProject-bennyi/polybot || true"
+      "chmod 755 /home/ubuntu/projects/AWSProject-bennyi/polybot || true",
+      "cd /home/ubuntu/projects/AWSProject-bennyi/polybot",
+      "ls -l"
      ]
     connection {
       type        = "ssh"
@@ -492,7 +494,7 @@ resource "aws_instance" "polybot_instance" {
       "sed -i '/DYNAMODB_TABLE/c\\DYNAMODB_TABLE='AWS-Project-Predictions-bennyi'' /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/.env",
       "sed -i '/AWS_REGION/c\\AWS_REGION='${var.region}'' /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/.env",
       "sed -i '/SQS_URL/c\\SQS_URL=https://sqs.${var.region}.amazonaws.com/019273956931/aws-sqs-image-processing-bennyi' /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/.env",
-      "sed -i '/SCERET_ID/c\\SECRET_ID='${var.secret_id }'' /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/.env",
+      "sed -i '/SECRET_ID/c\\SECRET_ID='${var.secret_id }'' /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/.env",
     ]
     connection {
       type        = "ssh"
