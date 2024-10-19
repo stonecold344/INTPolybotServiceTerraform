@@ -469,7 +469,7 @@ resource "aws_instance" "polybot_instance" {
   }
 
   provisioner "file" {
-    source      = "/polybot/"
+    source      = "polybot/"
     destination = "/home/ubuntu/projects/AWSProject-bennyi/polybot"
 
     connection {
@@ -584,7 +584,7 @@ resource "aws_instance" "yolo5_instance" {
   }
 
   provisioner "file" {
-    source      = "/yolo5/"
+    source      = "yolo5/"
     destination = "/home/ubuntu/yolo5"
 
     connection {
