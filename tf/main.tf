@@ -381,7 +381,7 @@ data "aws_iam_role" "common_role" {
 }
 
 resource "aws_iam_instance_profile" "common_instance_profile" {
-  name = "aws-common-polybot-yolo5-profile"
+  name = "aws-common-polybot-yolo5-profile-${var.region}"
   role = data.aws_iam_role.common_role.name
 }
 
