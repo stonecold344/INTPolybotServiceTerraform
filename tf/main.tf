@@ -510,7 +510,6 @@ resource "aws_instance" "polybot_instance" {
       "cd /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/",
       "ls -al",
       "sudo systemctl restart docker",
-      "docker system prune -a -f",
       "docker build -t stonecold344/polybot .",
       "docker-compose up -d"
     ]
