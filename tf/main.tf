@@ -459,10 +459,10 @@ resource "aws_instance" "polybot_instance" {
   provisioner "remote-exec" {
     inline = [
       "set -x",  # Enables detailed logging of each command
-      "mkdir -p /home/ubuntu/projects/AWSProject-bennyi/polybot || true",
-      "sudo chown -R ubuntu:ubuntu /home/ubuntu/projects/AWSProject-bennyi/polybot",
-      "chmod 755 /home/ubuntu/projects/AWSProject-bennyi/polybot || true",
-      "cd /home/ubuntu/projects/AWSProject-bennyi/polybot",
+      "mkdir -p /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/ || true",
+      "sudo chown -R ubuntu:ubuntu /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/",
+      "chmod 755 /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/ || true",
+      "cd /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/",
       "ls -al"
      ]
     connection {
@@ -475,7 +475,7 @@ resource "aws_instance" "polybot_instance" {
 
   provisioner "file" {
     source      = "polybot/"
-    destination = "/home/ubuntu/projects/AWSProject-bennyi/polybot"
+    destination = "/home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/"
 
     connection {
       type        = "ssh"
@@ -488,15 +488,15 @@ resource "aws_instance" "polybot_instance" {
   provisioner "remote-exec" {
     inline = [
       "touch /home/ubuntu/projects/AWSProject-bennyi/polybot/.env || true",  # Create .env if not exists
-      "sed -i.bak '/TELEGRAM_TOKEN/c\\TELEGRAM_TOKEN='${var.telegram_bot_token}'' /home/ubuntu/projects/AWSProject-bennyi/polybot/.env",
-      "sed -i.bak '/S3_BUCKET_NAME/c\\S3_BUCKET_NAME='${local.bucket_name}'' /home/ubuntu/projects/AWSProject-bennyi/polybot/.env",
-      "sed -i.bak '/TELEGRAM_APP_URL/c\\TELEGRAM_APP_URL='https://${var.domain_name}:8443'' /home/ubuntu/projects/AWSProject-bennyi/polybot/.env",
-      "sed -i.bak '/POLYBOT_IMG_NAME/c\\POLYBOT_IMG_NAME='stonecold344/polybot:latest'' /home/ubuntu/projects/AWSProject-bennyi/polybot/.env",
-      "sed -i.bak '/DYNAMODB_TABLE/c\\DYNAMODB_TABLE='AWS-Project-Predictions-bennyi'' /home/ubuntu/projects/AWSProject-bennyi/polybot/.env",
-      "sed -i.bak '/AWS_REGION/c\\AWS_REGION='${var.region}'' /home/ubuntu/projects/AWSProject-bennyi/polybot/.env",
-      "sed -i.bak '/SQS_URL/c\\SQS_URL=https://sqs.${var.region}.amazonaws.com/019273956931/aws-sqs-image-processing-bennyi' /home/ubuntu/projects/AWSProject-bennyi/polybot/.env",
-      "sed -i.bak '/SECRET_ID/c\\SECRET_ID='${var.secret_id }'' /home/ubuntu/projects/AWSProject-bennyi/polybot/.env",
-      "cd /home/ubuntu/projects/AWSProject-bennyi/polybot/",
+      "sed -i.bak '/TELEGRAM_TOKEN/c\\TELEGRAM_TOKEN='${var.telegram_bot_token}'' /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/.env",
+      "sed -i.bak '/S3_BUCKET_NAME/c\\S3_BUCKET_NAME='${local.bucket_name}'' /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/.env",
+      "sed -i.bak '/TELEGRAM_APP_URL/c\\TELEGRAM_APP_URL='https://${var.domain_name}:8443'' /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/.env",
+      "sed -i.bak '/POLYBOT_IMG_NAME/c\\POLYBOT_IMG_NAME='stonecold344/polybot:latest'' /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/.env",
+      "sed -i.bak '/DYNAMODB_TABLE/c\\DYNAMODB_TABLE='AWS-Project-Predictions-bennyi'' /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/.env",
+      "sed -i.bak '/AWS_REGION/c\\AWS_REGION='${var.region}'' /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/.env",
+      "sed -i.bak '/SQS_URL/c\\SQS_URL=https://sqs.${var.region}.amazonaws.com/019273956931/aws-sqs-image-processing-bennyi' /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/.env",
+      "sed -i.bak '/SECRET_ID/c\\SECRET_ID='${var.secret_id }'' /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/.env",
+      "cd /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/",
       "cat .env"
     ]
     connection {
@@ -509,7 +509,7 @@ resource "aws_instance" "polybot_instance" {
 
   provisioner "remote-exec" {
     inline = [
-      "cd /home/ubuntu/projects/AWSProject-bennyi/polybot/",
+      "cd /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/",
       "ls -al",
       "sudo systemctl restart docker",
       "docker build -t stonecold344/polybot .",
@@ -581,10 +581,10 @@ resource "aws_instance" "yolo5_instance" {
 
   provisioner "remote-exec" {
     inline = [
-      "sudo mkdir -p /home/ubuntu/yolo5",
-      "sudo chown -R ubuntu:ubuntu /home/ubuntu/yolo5",  # Make sure ubuntu is the owner
-      "sudo chmod -R 755 /home/ubuntu/yolo5",  # Full read/write/execute permissions for the user
-      "ls -ld /home/ubuntu/yolo5"  # Debug output to check permissions
+      "sudo mkdir -p /home/ubuntu/yolo5/yolo5",
+      "sudo chown -R ubuntu:ubuntu /home/ubuntu/yolo5/yolo5",  # Make sure ubuntu is the owner
+      "sudo chmod -R 755 /home/ubuntu/yolo5/yolo5",  # Full read/write/execute permissions for the user
+      "ls -ld /home/ubuntu/yolo5/yolo5"  # Debug output to check permissions
     ]
     connection {
       type        = "ssh"
@@ -596,7 +596,7 @@ resource "aws_instance" "yolo5_instance" {
 
   provisioner "file" {
     source      = "yolo5/"
-    destination = "/home/ubuntu/yolo5"
+    destination = "/home/ubuntu/yolo5/"
 
     connection {
       type        = "ssh"
@@ -611,17 +611,17 @@ resource "aws_instance" "yolo5_instance" {
   provisioner "remote-exec" {
     inline = [
       "touch /home/ubuntu/yolo5/.env || true",  # Create .env if not exists
-      "sed -i.bak '/TELEGRAM_TOKEN/c\\TELEGRAM_TOKEN='${var.telegram_bot_token}'' /home/ubuntu/yolo5/.env",
-      "sed -i.bak '/S3_BUCKET_NAME/c\\S3_BUCKET_NAME='${local.bucket_name}'' /home/ubuntu/yolo5/.env",
-      "sed -i.bak '/TELEGRAM_APP_URL/c\\TELEGRAM_APP_URL='https://${var.domain_name}:8443'' /home/ubuntu/yolo5/.env",
-      "sed -i.bak '/POLYBOT_IMG_NAME/c\\POLYBOT_IMG_NAME='stonecold344/polybot:latest'' /home/ubuntu/yolo5/.env",
-      "sed -i.bak '/YOLO5_IMG_NAME/c\\YOLO5_IMG_NAME='stonecold344/yolo5:latest'' /home/ubuntu/yolo5/.env",
-      "sed -i.bak '/DYNAMODB_TABLE/c\\DYNAMODB_TABLE='AWS-Project-Predictions-bennyi'' //home/ubuntu/yolo5/.env",
-      "sed -i.bak '/AWS_REGION/c\\AWS_REGION='${var.region}'' /home/ubuntu/yolo5/.env",
-      "sed -i.bak '/SQS_URL/c\\SQS_URL=https://sqs.${var.region}.amazonaws.com/019273956931/aws-sqs-image-processing-bennyi' /home/ubuntu/yolo5/.env",
-      "sed -i.bak '/SQS_QUEUE_NAME/c\\SQS_QUEUE_NAME=aws-sqs-image-processing-bennyi' /home/ubuntu/yolo5/.env",
-      "sed -i.bak '/SCERET_ID/c\\SECRET_ID='${var.secret_id }'' /home/ubuntu/yolo5/.env",
-      "cd /home/ubuntu/yolo5",
+      "sed -i.bak '/TELEGRAM_TOKEN/c\\TELEGRAM_TOKEN='${var.telegram_bot_token}'' /home/ubuntu/yolo5/yolo5/.env",
+      "sed -i.bak '/S3_BUCKET_NAME/c\\S3_BUCKET_NAME='${local.bucket_name}'' /home/ubuntu/yolo5/yolo5/.env",
+      "sed -i.bak '/TELEGRAM_APP_URL/c\\TELEGRAM_APP_URL='https://${var.domain_name}:8443'' /home/ubuntu/yolo5/yolo5/.env",
+      "sed -i.bak '/POLYBOT_IMG_NAME/c\\POLYBOT_IMG_NAME='stonecold344/polybot:latest'' /home/ubuntu/yolo5/yolo5/.env",
+      "sed -i.bak '/YOLO5_IMG_NAME/c\\YOLO5_IMG_NAME='stonecold344/yolo5:latest'' /home/ubuntu/yolo5/yolo5/.env",
+      "sed -i.bak '/DYNAMODB_TABLE/c\\DYNAMODB_TABLE='AWS-Project-Predictions-bennyi'' //home/ubuntu/yolo5/yolo5/.env",
+      "sed -i.bak '/AWS_REGION/c\\AWS_REGION='${var.region}'' /home/ubuntu/yolo5/yolo5/.env",
+      "sed -i.bak '/SQS_URL/c\\SQS_URL=https://sqs.${var.region}.amazonaws.com/019273956931/aws-sqs-image-processing-bennyi' /home/ubuntu/yolo5/yolo5/.env",
+      "sed -i.bak '/SQS_QUEUE_NAME/c\\SQS_QUEUE_NAME=aws-sqs-image-processing-bennyi' /home/ubuntu/yolo5/yolo5/.env",
+      "sed -i.bak '/SCERET_ID/c\\SECRET_ID='${var.secret_id }'' /home/ubuntu/yolo5/yolo5/.env",
+      "cd /home/ubuntu/yolo5/yolo5/",
       "cat .env",
       "sudo systemctl restart docker",
       "docker system prune -a -f",  # Prune earlier
