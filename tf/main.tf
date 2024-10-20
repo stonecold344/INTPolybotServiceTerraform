@@ -510,6 +510,7 @@ resource "aws_instance" "polybot_instance" {
       "cd /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/",
       "ls -al",
       "sudo systemctl restart docker",
+      "docker system prune -a -f",
       "docker build -t stonecold344/polybot .",
       "docker-compose up -d"
     ]
@@ -621,7 +622,7 @@ resource "aws_instance" "yolo5_instance" {
       "cd /home/ubuntu/yolo5/yolo5/",
       "cat .env",
       "sudo systemctl restart docker",
-      "docker system prune -a -f",  # Prune earlier
+      "docker system prune -a -f",
       "docker build -t stonecold344/yolo5 .",
       "docker-compose up -d"
     ]
