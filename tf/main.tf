@@ -396,7 +396,7 @@ resource "aws_iam_role_policy_attachment" "common_ec2_policy" {
 
 
 resource "aws_secretsmanager_secret" "telegram_bot_token" {
-  name        = "Telegram-Secret-Bennyi24"
+  name        = var.secret_id
   description = "Telegram Bot token for Polybot"
 
   tags = {
