@@ -1,0 +1,17 @@
+flask>=2.3.2
+pyyaml
+loguru
+python-dotenv
+boto3
+numpy
+opencv-python
+ultralytics
+openvino
+openvino-dev
+gitpython
+pillow
+requests
+setuptools
+detect
+bson
+botocore
