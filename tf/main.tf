@@ -461,9 +461,7 @@ resource "aws_instance" "polybot_instance" {
       "set -x",  # Enables detailed logging of each command
       "mkdir -p /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/ || true",
       "sudo chown -R ubuntu:ubuntu /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/",
-      "chmod 755 /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/ || true",
-      "cd /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/",
-      "ls -al"
+      "chmod 755 /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/ || true"
      ]
     connection {
       type        = "ssh"
@@ -475,7 +473,7 @@ resource "aws_instance" "polybot_instance" {
 
   provisioner "file" {
     source      = "polybot/"
-    destination = "/home/ubuntu/projects/AWSProject-bennyi/polybot/polybot/"
+    destination = "/home/ubuntu/projects/AWSProject-bennyi/polybot/polybot"
 
     connection {
       type        = "ssh"
@@ -582,9 +580,8 @@ resource "aws_instance" "yolo5_instance" {
   provisioner "remote-exec" {
     inline = [
       "sudo mkdir -p /home/ubuntu/yolo5/yolo5",
-      "sudo chown -R ubuntu:ubuntu /home/ubuntu/yolo5/yolo5",  # Make sure ubuntu is the owner
-      "sudo chmod -R 755 /home/ubuntu/yolo5/yolo5",  # Full read/write/execute permissions for the user
-      "ls -ld /home/ubuntu/yolo5/yolo5"  # Debug output to check permissions
+      "sudo chown -R ubuntu:ubuntu /home/ubuntu/yolo5/yolo5",
+      "sudo chmod -R 755 /home/ubuntu/yolo5/yolo5"
     ]
     connection {
       type        = "ssh"
@@ -596,7 +593,7 @@ resource "aws_instance" "yolo5_instance" {
 
   provisioner "file" {
     source      = "yolo5/"
-    destination = "/home/ubuntu/yolo5/"
+    destination = "/home/ubuntu/yolo5/yolo5"
 
     connection {
       type        = "ssh"
@@ -610,7 +607,7 @@ resource "aws_instance" "yolo5_instance" {
 
   provisioner "remote-exec" {
     inline = [
-      "touch /home/ubuntu/yolo5/.env || true",  # Create .env if not exists
+      "touch /home/ubuntu/yolo5/yolo5/.env || true",  # Create .env if not exists
       "sed -i.bak '/TELEGRAM_TOKEN/c\\TELEGRAM_TOKEN='${var.telegram_bot_token}'' /home/ubuntu/yolo5/yolo5/.env",
       "sed -i.bak '/S3_BUCKET_NAME/c\\S3_BUCKET_NAME='${local.bucket_name}'' /home/ubuntu/yolo5/yolo5/.env",
       "sed -i.bak '/TELEGRAM_APP_URL/c\\TELEGRAM_APP_URL='https://${var.domain_name}:8443'' /home/ubuntu/yolo5/yolo5/.env",
