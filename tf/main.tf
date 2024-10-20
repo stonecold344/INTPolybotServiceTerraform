@@ -509,7 +509,9 @@ resource "aws_instance" "polybot_instance" {
 
   provisioner "remote-exec" {
     inline = [
-      "cd /home/ubuntu/projects/AWSProject-bennyi/polybot/polybot",
+      "cd /home/ubuntu/projects/AWSProject-bennyi/polybot/",
+      "ls -al",
+      "sudo systemctl restart docker",
       "docker build -t stonecold344/polybot .",
       "docker-compose up -d"
     ]
