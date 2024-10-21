@@ -50,22 +50,23 @@ jobs:
             echo "    name       = \"terraform-vpc-${{ matrix.region }}-bennyi\"" >> ./tf/region.${{ matrix.region }}.tfvars
             echo "    azs        = [\"${{ matrix.region }}a\", \"${{ matrix.region }}b\"]" >> ./tf/region.${{ matrix.region }}.tfvars
             echo "  }}" >> ./tf/region.${{ matrix.region }}.tfvars
+            echo "Variable file created at ./tf/region.${{ matrix.region }}.tfvars"
+          else
+            echo "No variable file created for region: ${{ matrix.region }}"
           fi
 
-      - name: Initialize Terraform
-        if: ${{ github.event.inputs[matrix.region] }}
+      - name: List files in tf directory
+        run: ls -la ./tf  # This will help verify if the variable files exist
+
+      - name: Infrastructure destroying
+        if: ${{ github.event.inputs[matrix.region] == 'true' }}
+        working-directory: ./tf
         run: |
           echo "Initializing Terraform for region: ${{ matrix.region }}"
           terraform init
-
-      - name: Select/Create Terraform Workspace
-        if: ${{ github.event.inputs[matrix.region] }}
-        run: |
+          
           echo "Selecting or creating workspace for region: ${{ matrix.region }}"
           terraform workspace select ${{ matrix.region }} || terraform workspace new ${{ matrix.region }}
 
-      - name: Infrastructure destroying
-        if: ${{ github.event.inputs[matrix.region] }}
-        run: |
           echo "Destroying infrastructure in region: ${{ matrix.region }}"
           terraform destroy -auto-approve -var-file=region.${{ matrix.region }}.tfvars || { echo 'Terraform destroy failed!'; exit 1; }
