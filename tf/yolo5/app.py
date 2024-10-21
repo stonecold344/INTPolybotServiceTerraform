@@ -36,7 +36,7 @@ def get_secret(secret_id):
         raise e
 
 # Retrieve the Telegram token
-SECRET_ID = "Telegram-Secret-Bennyi24"
+SECRET_ID = "Telegram-Secret-Bennyi25"
 secrets = get_secret(SECRET_ID)
 TELEGRAM_TOKEN = secrets.get("Telegram-Secret-Bennyi")
 
