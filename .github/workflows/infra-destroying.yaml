@@ -1,66 +1,37 @@
-name: Infrastructure Destroy Terraform
+name: Terraform Infrastructure Destroy
 
 on:
   workflow_dispatch:
     inputs:
-      us-east-1:
-        description: 'N.Virginia (us-east-1)'
-        required: false
-        type: boolean
-      eu-central-1:
-        description: 'Frankfurt (eu-central-1)'
-        required: false
-        type: boolean
+      region:
+        description: 'Select the AWS region'
+        required: true
+        default: 'us-east-1'
+        type: choice
+        options:
+          - us-east-1
+          - eu-west-1
 
 jobs:
-  Terraform:
+  destroy:
     runs-on: ubuntu-latest
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      TELEGRAM_TOKEN: ${{ secrets.US_EAST_1_TELEGRAM_TOKEN }}
-      AWS_PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY }}
-
     strategy:
       matrix:
-        region:
-          - us-east-1
-          - eu-central-1
+        region: [us-east-1, eu-west-1]
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: 1.9.7  # Ensure this matches your local version
-
-      - name: Create variables file
         run: |
-          if [[ "${{ github.event.inputs[${{ matrix.region }}] }}" == 'true' ]]; then
-            echo "Creating variable file for region: ${{ matrix.region }}"
-            echo "region = \"${{ matrix.region }}\"" > ./tf/region.${{ matrix.region }}.tfvars
-            echo "domain_name = \"aws-domain-bennyi.int-devops.click\"" >> ./tf/region.${{ matrix.region }}.tfvars
-            echo "yolo5_ami_id = \"ami-012d180e09be669db\"" >> ./tf/region.${{ matrix.region }}.tfvars
-            echo "yolo5_instance_type = \"t2.medium\"" >> ./tf/region.${{ matrix.region }}.tfvars
-            echo "bot_token = \"${{ secrets.BOT_TOKEN }}\"" >> ./tf/region.${{ matrix.region }}.tfvars  # Use secret
-            echo "vpc_configs = {\"${{ matrix.region }}\" = {" >> ./tf/region.${{ matrix.region }}.tfvars
-            echo "    cidr_block = \"10.0.0.0/16\"" >> ./tf/region.${{ matrix.region }}.tfvars
-            echo "    name       = \"terraform-vpc-${{ matrix.region }}-bennyi\"" >> ./tf/region.${{ matrix.region }}.tfvars
-            echo "    azs        = [\"${{ matrix.region }}a\", \"${{ matrix.region }}b\"]" >> ./tf/region.${{ matrix.region }}.tfvars
-            echo "  }}" >> ./tf/region.${{ matrix.region }}.tfvars
-          fi
+          curl -LO "https://github.com/hashicorp/terraform/releases/latest/download/terraform_$(uname | tr '[:lower:]' '[:upper:]')_amd64.zip"
+          unzip terraform_*.zip
+          sudo mv terraform /usr/local/bin/
+          terraform -version
 
-      - name: Infrastructure destroying
-        if: ${{ github.event.inputs[${{ matrix.region }}] == 'true' }}
-        working-directory: ./tf
-        run: |
-          echo "Initializing Terraform for region: ${{ matrix.region }}"
-          terraform init
-          
-          echo "Selecting or creating workspace for region: ${{ matrix.region }}"
-          terraform workspace select ${{ matrix.region }} || terraform workspace new ${{ matrix.region }}
+      - name: Terraform Init
+        run: terraform init -backend-config="region=${{ matrix.region }}"
 
-          echo "Destroying infrastructure in region: ${{ matrix.region }}"
-          terraform destroy -auto-approve -var "aws_private_key=${{ secrets.AWS_PRIVATE_KEY }}" -var-file=region.${{ matrix.region }}.tfvars || { echo 'Terraform destroy failed!'; exit 1; }
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve -var "aws_private_key=${{ secrets.AWS_PRIVATE_KEY }}" -var-file="region.${{ matrix.region }}.tfvars"
