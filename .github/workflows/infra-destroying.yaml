@@ -36,7 +36,7 @@ jobs:
           terraform_version: 1.9.7  # Ensure this matches your local version
 
       - name: Create private key file
-        run: echo "${{ secrets.AWS_PRIVATE_KEY }}" > aws-bennyi.pem
+        run: echo "${{ secrets.AWS_PRIVATE_KEY }}" > ./tf/aws-bennyi.pem
 
       - name: List files in tf directory
         run: ls -la ./tf  # This will help verify if the variable files exist
