@@ -53,7 +53,9 @@ jobs:
             terraform workspace select ${{ matrix.region }} || terraform workspace new ${{ matrix.region }}
 
             echo "Destroying infrastructure in region: ${{ matrix.region }}"
-            terraform destroy -auto-approve -var-file=region.${{ matrix.region }}.tfvars -target=aws_subnet.polybot_subnet -target=aws_subnet.polybot_subnet2 -target=aws_security_group.polybot_sg || { echo 'Terraform destroy failed!'; exit 1; }
+            terraform destroy -auto-approve -var-file=region.${{ matrix.region }}.tfvars \
+            -target=aws_subnet.polybot_subnet -target=aws_subnet.polybot_subnet_2 \
+            -target=aws_security_group.polybot_sg || { echo 'Terraform destroy failed!'; exit 1; }
           else
             echo "Variable file region.${{ matrix.region }}.tfvars not found. Skipping destroy."
           fi
