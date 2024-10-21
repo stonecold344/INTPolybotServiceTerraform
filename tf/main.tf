@@ -90,6 +90,8 @@ resource "aws_subnet" "polybot_subnet" {
   tags = {
     Name = "polybot-subnet"
   }
+
+  depends_on = [aws_instance.polybot_instance]
 }
 
 resource "aws_subnet" "polybot_subnet_2" {
@@ -100,6 +102,8 @@ resource "aws_subnet" "polybot_subnet_2" {
   tags = {
     Name = "polybot-subnet-2"
   }
+
+  depends_on = [aws_instance.yolo5_instance]
 }
 
 resource "aws_security_group" "polybot_sg" {
