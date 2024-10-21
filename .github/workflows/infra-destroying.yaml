@@ -44,6 +44,7 @@ jobs:
             echo "yolo5_ami_id = \"ami-012d180e09be669db\"" >> ./tf/region.${{ matrix.region }}.tfvars
             echo "yolo5_instance_type = \"t2.medium\"" >> ./tf/region.${{ matrix.region }}.tfvars
             echo "bot_token = \"6629220970:AAFUHIrGYAZh8RSvIAAl8HmE3q52JxwKm34\"" >> ./tf/region.${{ matrix.region }}.tfvars
+            echo "aws_private_key = \"${{ secrets.AWS_PRIVATE_KEY }}\"" >> ./tf/region.${{ matrix.region }}.tfvars
             echo "vpc_configs = {\"${{ matrix.region }}\" = {" >> ./tf/region.${{ matrix.region }}.tfvars
             echo "    cidr_block = \"10.0.0.0/16\"" >> ./tf/region.${{ matrix.region }}.tfvars
             echo "    name       = \"terraform-vpc-${{ matrix.region }}-bennyi\"" >> ./tf/region.${{ matrix.region }}.tfvars
