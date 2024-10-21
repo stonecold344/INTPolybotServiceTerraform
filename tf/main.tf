@@ -87,6 +87,10 @@ resource "aws_subnet" "polybot_subnet" {
   cidr_block        = "10.0.1.0/24"
   availability_zone = "${var.region}a"
 
+  lifecycle {
+    prevent_destroy = false
+  }
+
   tags = {
     Name = "polybot-subnet"
   }
@@ -96,6 +100,10 @@ resource "aws_subnet" "polybot_subnet_2" {
   vpc_id            = aws_vpc.polybot_vpc.id
   cidr_block        = "10.0.2.0/24"
   availability_zone = "${var.region}b"
+
+  lifecycle {
+    prevent_destroy = false
+  }
 
   tags = {
     Name = "polybot-subnet-2"
@@ -182,6 +190,10 @@ resource "aws_security_group" "polybot_sg" {
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  lifecycle {
+    prevent_destroy = false
   }
 
   tags = {
