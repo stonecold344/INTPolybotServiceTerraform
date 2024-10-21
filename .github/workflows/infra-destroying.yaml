@@ -35,27 +35,6 @@ jobs:
         with:
           terraform_version: 1.9.7  # Ensure this matches your local version
 
-      - name: Create variables file
-        run: |
-          if [[ "${{ github.event.inputs[matrix.region] }}" == 'true' ]]; then
-            echo "Creating variable file for region: ${{ matrix.region }}"
-            mkdir -p ./tf  # Ensure the directory exists
-            echo "region = \"${{ matrix.region }}\"" > ./tf/region.${{ matrix.region }}.tfvars
-            echo "domain_name = \"aws-domain-bennyi.int-devops.click\"" >> ./tf/region.${{ matrix.region }}.tfvars
-            echo "yolo5_ami_id = \"ami-012d180e09be669db\"" >> ./tf/region.${{ matrix.region }}.tfvars
-            echo "yolo5_instance_type = \"t2.medium\"" >> ./tf/region.${{ matrix.region }}.tfvars
-            echo "bot_token = \"6629220970:AAFUHIrGYAZh8RSvIAAl8HmE3q52JxwKm34\"" >> ./tf/region.${{ matrix.region }}.tfvars
-            echo "aws_private_key = \"${{ secrets.AWS_PRIVATE_KEY }}\"" >> ./tf/region.${{ matrix.region }}.tfvars
-            echo "vpc_configs = {\"${{ matrix.region }}\" = {" >> ./tf/region.${{ matrix.region }}.tfvars
-            echo "    cidr_block = \"10.0.0.0/16\"" >> ./tf/region.${{ matrix.region }}.tfvars
-            echo "    name       = \"terraform-vpc-${{ matrix.region }}-bennyi\"" >> ./tf/region.${{ matrix.region }}.tfvars
-            echo "    azs        = [\"${{ matrix.region }}a\", \"${{ matrix.region }}b\"]" >> ./tf/region.${{ matrix.region }}.tfvars
-            echo "  }}" >> ./tf/region.${{ matrix.region }}.tfvars
-            echo "Variable file created at ./tf/region.${{ matrix.region }}.tfvars"
-          else
-            echo "No variable file created for region: ${{ matrix.region }}"
-          fi
-
       - name: List files in tf directory
         run: ls -la ./tf  # This will help verify if the variable files exist
 
