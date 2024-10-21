@@ -91,7 +91,7 @@ resource "aws_subnet" "polybot_subnet" {
     Name = "polybot-subnet"
   }
 
-  depends_on = [aws_instance.polybot_instance]
+  #depends_on = [aws_instance.polybot_instance]
 }
 
 resource "aws_subnet" "polybot_subnet_2" {
@@ -103,7 +103,7 @@ resource "aws_subnet" "polybot_subnet_2" {
     Name = "polybot-subnet-2"
   }
 
-  depends_on = [aws_instance.yolo5_instance]
+  #depends_on = [aws_instance.yolo5_instance]
 }
 
 resource "aws_security_group" "polybot_sg" {
