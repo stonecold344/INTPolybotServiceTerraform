@@ -88,7 +88,7 @@ resource "aws_subnet" "polybot_subnet" {
   availability_zone = "${var.region}a"
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 
   tags = {
@@ -102,7 +102,7 @@ resource "aws_subnet" "polybot_subnet_2" {
   availability_zone = "${var.region}b"
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 
   tags = {
@@ -193,7 +193,7 @@ resource "aws_security_group" "polybot_sg" {
   }
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 
   tags = {
